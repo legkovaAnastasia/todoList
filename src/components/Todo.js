@@ -42,6 +42,33 @@ const Todo = () => {
         ]);
     }
 
+    // const filterAll = () => {
+    //     setTodos([...todos])
+    // }
+
+    // const filterDone = () => {
+    //     setTodos([
+    //         ...todos.map((todo) => todo.checked === true) ])
+    // }
+
+    // const filterActive = () => {
+    //     setTodos([
+    //         ...todos.map((todo) => todo.checked === false) ])
+    // }
+    const filterAll = () => {
+        setTodos([...todos])
+    }
+
+    const filterDone = () => {
+        setTodos([
+            ...todos.filter((todo) => todo.checked === true) ])
+    }
+
+    const filterActive = () => {
+        setTodos([
+            ...todos.filter((todo) => todo.checked === false) ])
+    }
+
     return (
         <div>
             <h1 className='title'> Todo list: {todos.length}</h1>
@@ -55,8 +82,15 @@ const Todo = () => {
                 onKeyDown={handleKeyDown} />
                 <button className='btn-add'>Add</button>
             </form>
+
+            <div className='list-header'>
+                <div className='all-todos' onClick={filterAll}>All todos</div>
+                <div className='done-todos' onClick={filterDone}>Done todos</div>
+                <div className='active-todos' onClick={filterActive}>Active todos</div>
+            </div>
+
             {todos.map((todo) => {
-                return(
+                return(                  
                     <ListTodo todo={todo} key={todo.id} removeItem={removeItem} checkItem={checkItem}/>
                 )
             })}
