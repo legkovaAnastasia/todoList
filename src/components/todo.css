@@ -1,0 +1,55 @@
+.input-form {
+    align-items: baseline;
+    margin-top: 10px;
+}
+
+.form-control {
+    width: 1000px;
+    height: 25px;
+    border-radius: 2px;
+}
+
+.form-control:focus {
+    outline: none;
+    /* border: 2px; */
+    border-color: rgb(102, 135, 197);
+    
+}
+
+.btn-add {
+    background-color: rgb(62, 72, 177);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    height: 31px;
+    width: 56px;
+    margin-left: 3px;
+    border-radius: 2px;
+}
+
+.todo-list {
+    align-items: baseline;
+    margin-top: 10px;
+
+}
+
+.todo-exact {
+    width: 800px;
+    float: left;
+    margin-left: 205px;
+}
+
+.btn-delete{
+    background-color: rgb(177, 85, 62);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    height: 31px;
+    margin-left: 6px;
+    border-radius: 2px;
+}
+
+.checked {
+    text-decoration: line-through;
+    color: gray;
+}
