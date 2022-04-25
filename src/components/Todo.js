@@ -13,14 +13,15 @@ const Todo = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(input) {
+        if(input.length <= 13) {
             const newTodo = {
                 id: Math.random().toString().substring(2,4),
                 todoItem: input,
                 checked: false
             }
             setTodos([...todos, newTodo]);
-            console.log(todos);
+        } else {
+            alert('max amount of symbols is 10')
         }
         setInput('');
     }
@@ -48,6 +49,7 @@ const Todo = () => {
                 <input 
                 className='form-control' 
                 type='text' 
+                placeholder='max amount of symbols is 10'
                 value={input} 
                 onChange={handleChange}
                 onKeyDown={handleKeyDown} />
