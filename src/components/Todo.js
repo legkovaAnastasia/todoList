@@ -1,11 +1,21 @@
 import ListTodo from './ListTodo';
 import todo from './todo.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Todo = () => {
     const [todos, setTodos] = useState([]);
 
     const [input, setInput] = useState('');
+
+    const [filter, setFilter] = useState(todo);
+
+    const filterTodo = (checked) => {
+        if ( checked === 'all') {
+            setFilter(todo)
+        } else {
+            
+        }
+    }
 
     const handleChange = (e) =>{
         setInput(e.currentTarget.value)
@@ -17,7 +27,7 @@ const Todo = () => {
             const newTodo = {
                 id: Math.random().toString().substring(2,4),
                 todoItem: input,
-                checked: false
+                checked: false,
             }
             setTodos([...todos, newTodo]);
         } else {
@@ -42,27 +52,18 @@ const Todo = () => {
         ]);
     }
 
-    // const filterAll = () => {
-    //     setTodos([...todos])
-    // }
-
-    // const filterDone = () => {
-    //     setTodos([
-    //         ...todos.map((todo) => todo.checked === true) ])
-    // }
-
-    // const filterActive = () => {
-    //     setTodos([
-    //         ...todos.map((todo) => todo.checked === false) ])
-    // }
     const filterAll = () => {
         setTodos([...todos])
     }
 
     const filterDone = () => {
         setTodos([
-            ...todos.filter((todo) => todo.checked === true) ])
+            ...todos.map((todo) => todo.checked === true ? {...todo} : {...null}) ])
     }
+    // const filterDone = () => {
+    //     setTodos([
+    //         ...todos.filter((todo) => todo.checked === true) ])
+    // }
 
     const filterActive = () => {
         setTodos([
@@ -84,9 +85,9 @@ const Todo = () => {
             </form>
 
             <div className='list-header'>
-                <div className='all-todos' onClick={filterAll}>All todos</div>
-                <div className='done-todos' onClick={filterDone}>Done todos</div>
-                <div className='active-todos' onClick={filterActive}>Active todos</div>
+                <div className='all-todos' onClick={() => filterTodo('all')}>All todos</div>
+                <div className='done-todos' onClick={() => filterTodo(true)}>Done todos</div>
+                <div className='active-todos' onClick={() => filterTodo(false)}>Active todos</div>
             </div>
 
             {todos.map((todo) => {
