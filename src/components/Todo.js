@@ -7,15 +7,11 @@ const Todo = () => {
 
     const [input, setInput] = useState('');
 
-    const [filter, setFilter] = useState(todo);
+    const [filtered, setFilter] = useState(todos);
 
-    const filterTodo = (checked) => {
-        if ( checked === 'all') {
-            setFilter(todo)
-        } else {
-            
-        }
-    }
+    useEffect( () => {
+        setFilter(todos)
+    }, [todos]);
 
     const handleChange = (e) =>{
         setInput(e.currentTarget.value)
@@ -23,7 +19,7 @@ const Todo = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(input.length <= 13) {
+        if(input.length <= 10) {
             const newTodo = {
                 id: Math.random().toString().substring(2,4),
                 todoItem: input,
@@ -34,6 +30,17 @@ const Todo = () => {
             alert('max amount of symbols is 10')
         }
         setInput('');
+    }
+
+    const filterTodo = (checked) => {
+        console.log(123);
+        if (    checked === 'all') {
+            setFilter(todos)
+        } else {
+            setFilter([...todos.filter((todo) => todo.checked === checked)])
+        }
+        console.log(1111);
+
     }
 
     const handleKeyDown = (e) => {
@@ -52,27 +59,14 @@ const Todo = () => {
         ]);
     }
 
-    const filterAll = () => {
-        setTodos([...todos])
-    }
-
-    const filterDone = () => {
-        setTodos([
-            ...todos.map((todo) => todo.checked === true ? {...todo} : {...null}) ])
-    }
-    // const filterDone = () => {
-    //     setTodos([
-    //         ...todos.filter((todo) => todo.checked === true) ])
-    // }
-
-    const filterActive = () => {
-        setTodos([
-            ...todos.filter((todo) => todo.checked === false) ])
-    }
+    let activeTodos = [...todos.map(todo => todo.checked === false)]
+    let inactiveTodos = [...todos.map(todo => todo.checked === true)]
 
     return (
         <div>
             <h1 className='title'> Todo list: {todos.length}</h1>
+            <h1 className='title'> Active Todo: {activeTodos.length}</h1>
+            <h1 className='title'> Inactive Todo: {inactiveTodos.length}</h1>
             <form className='input-form' onSubmit={handleSubmit}>
                 <input 
                 className='form-control' 
@@ -90,7 +84,7 @@ const Todo = () => {
                 <div className='active-todos' onClick={() => filterTodo(false)}>Active todos</div>
             </div>
 
-            {todos.map((todo) => {
+            {filtered.map((todo) => {
                 return(                  
                     <ListTodo todo={todo} key={todo.id} removeItem={removeItem} checkItem={checkItem}/>
                 )
