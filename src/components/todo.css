@@ -55,5 +55,20 @@
 }
 
 .list-header {
-    align-items: baseline;
+    align-items: center;
+    text-align: center;
+}
+  
+.all-todos, .done-todos, .active-todos {
+    color: green;
+    /* width: 100px;
+    height: 35px;
+    text-align: center; */
+}
+
+.todos {
+    color: blueviolet;
+    /* width: 100px;
+    height: 35px;
+    text-align: center; */
 }

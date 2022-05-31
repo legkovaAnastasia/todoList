@@ -1,7 +1,6 @@
 import ListTodo from './ListTodo';
 import todo from './todo.css'
 import { useState, useEffect } from 'react';
-import Counter from './Counter';
 
 const Todo = () => {
     const [todos, setTodos] = useState([]);
@@ -10,9 +9,19 @@ const Todo = () => {
 
     const [filtered, setFilter] = useState(todos);
 
+    const [all, setAll] = useState(false);
+    const [active, setActive] = useState(false);
+    const [done, setDone] = useState(false);
+
     useEffect(() => {
         setFilter(todos);
     }, [todos]);
+
+    // useEffect(() => {
+    //     setActive(active);
+    //     setAll(all);
+    //     setDone(done);
+    // })
 
     const handleChange = (e) => {
         setInput(e.currentTarget.value)
@@ -36,8 +45,19 @@ const Todo = () => {
     const filterTodo = (checked) => {
         if (checked === 'all') {
             setFilter(todos);
+            setAll(!all);
+            setActive(false);
+            setDone(false);
+        } else if (checked === false) {
+            setFilter([...todos.filter((todo) => todo.checked === false)]);
+            setActive(!active);
+            setAll(false);
+            setDone(false);
         } else {
-            setFilter([...todos.filter((todo) => todo.checked === checked)]);
+            setFilter([...todos.filter((todo) => todo.checked === true)]);
+            setDone(!done);
+            setActive(false);
+            setAll(false);
         }
     }
 
@@ -59,13 +79,14 @@ const Todo = () => {
 
     let activeCounter = filtered.filter(todo => todo.checked === false).length;
     let inactiveCounter = filtered.filter(todo => todo.checked === true).length;
-    let everyCounter = filtered.filter(todo => todo.checked === false || true).length;
 
     return (
         <div>
-            <h1 className='title'> Todo list: {everyCounter}</h1>
-            <h1 className='title'> ActiveTodo: {activeCounter}</h1>
-            <h1 className='counter'> Inactive Todo: {inactiveCounter} </h1>
+            <div className='counter-form'>
+                <h1 className='counter all'> Todo list: {todos.length}</h1>
+                <h1 className='counter active'> ActiveTodo: {activeCounter}</h1>
+                <h1 className='counter inactive'> Inactive Todo: {inactiveCounter} </h1>
+            </div>
             <form className='input-form' onSubmit={handleSubmit}>
                 <input
                     className='form-control'
@@ -78,9 +99,9 @@ const Todo = () => {
             </form>
 
             <div className='list-header'>
-                <div className='all-todos' onClick={() => filterTodo('all')} >All todos</div>
-                <div className='done-todos' onClick={() => filterTodo(true)} >Done todos</div>
-                <div className='active-todos' onClick={() => filterTodo(false)} >Active todos</div>
+                <div className={all ? 'all-todos' : 'todos'} onClick={() => filterTodo('all')} >All todos</div>
+                <div className={active ? 'active-todos' : 'todos'} onClick={() => filterTodo(false)} >Active todos</div>
+                <div className={done ? 'done-todos' : 'todos'} onClick={() => filterTodo(true)}>Done todos</div>
             </div>
 
             {filtered.map((todo) => {
